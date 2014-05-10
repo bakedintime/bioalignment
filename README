@@ -1,0 +1,10 @@
+
+
+Para instalar numpy en Mac OS X (es necesario para nwalign)
+export CC=gcc-4.2
+export CXX=g++-4.2
+export FFLAGS=-ff2c
+
+pip install numpy
+
+cadena mas larga le sacas el 25% entonces se le agregan a la cadena mas peque;a
