@@ -16,6 +16,14 @@ class BioMatrix(object):
         self.db = self.conn.bioalignment
         self.matrix = self.db["matrix"]
 
+    def get_coordinate_score(self, i, j):
+        if self.biomatrix == None:
+            self.init_db()
+            matrix = self.get_from_db()
+            return matrix[int(i)-1, int(j)-1]
+        else:
+            return self.biomatrix[int(i)-1, int(j)-1]
+
     def get_score(self):
         return self.score
 
