@@ -108,7 +108,7 @@ class DNA(object):
                     self.genes[index] = self.mutation_function(self)
 
     def __repr__(self):
-        return '[' + ','.join(self.genes) + ']'
+        return '[' + ','.join(str(self.genes)) + ']'
 
 class Population(object):
     """Holds a population of DNA, as well as functions for iterating over
@@ -128,14 +128,12 @@ class Population(object):
 
         self.population = []
         for index in xrange(0, self.size):
-            self.population.insert(index,
-                DNA(generation_function, evaluation_function,
-                    mutation_function, gene_length, dataset, placeholder)
-                )
-
-        if debug:
-            logger.debug('Population: ' + str(pprint.pformat(self.population)))
-
+            dna =  DNA(generation_function, evaluation_function,
+                    mutation_function, gene_length, dataset[index], placeholder)
+            self.population.insert(index, dna)
+            
+        #print ('Population: ' + str(pprint.pformat(self.population)))
+        
     def evaluate(self, target_fitness = 1.0):
         """Evaluates the fitness of each DNA strand."""
 
@@ -154,9 +152,9 @@ class Population(object):
             if dna.fitness >= target_fitness:
                 return dna
 
-        logger.info('Average fitness: ' + str(total_fitness / self.size))
-        logger.info('Best fitness:' + str(best_fitness))
-        logger.info('Best DNA: ' + ''.join(best_dna.genes))
+        print 'Average fitness: ', str(total_fitness / self.size)
+        print 'Best fitness:', str(best_fitness)
+        print 'Best DNA: ', best_dna.genes
 
         return None
 
@@ -171,8 +169,7 @@ class Population(object):
             for index in xrange(0, proportion):
                 self.mating_pool.insert(index, dna)
 
-        if debug:
-            logger.debug('Mating pool: ' + str(pprint.pformat(self.mating_pool)))
+        #logger.debug('Mating pool: ' + str(pprint.pformat(self.mating_pool)))
 
     def mate(self):
         """Go through the population and force-mate random pairs. Because
