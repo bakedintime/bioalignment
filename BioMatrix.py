@@ -39,27 +39,27 @@ class BioMatrix(object):
         return self.conn
 
     def get_from_db(self):
-        if not self.conn:
-            print 'Primero debes ejecutar init_db()'
-        else:
-            matrix = self.matrix.find_one({"key":"main"})
-            deserialized_matrix = pickle.loads(matrix['matrix'])
-            self.biomatrix = deserialized_matrix
-            return self.biomatrix
+        if not hasattr(self, 'conn'):
+            self.init_db()
+        
+        matrix = self.matrix.find_one({"key":"main"})
+        deserialized_matrix = pickle.loads(matrix['matrix'])
+        self.biomatrix = deserialized_matrix
+        return self.biomatrix
 
     def post_to_db(self, new_matrix):
-        if not self.conn:
-            print 'Primero debes ejecutar init_db()'
+        if not hasattr(self, 'conn'):
+            self.init_db()
+        
+        array = self.matrix.find_one({"key":"main"})
+        if array:
+            array['matrix'] = bson.binary.Binary(pickle.dumps(new_matrix, protocol=2))
+            self.matrix.save(array)
         else:
-            array = self.matrix.find_one({"key":"main"})
-            if array:
-                array['matrix'] = bson.binary.Binary(pickle.dumps(new_matrix, protocol=2))
-                self.matrix.save(array)
-            else:
-                self.matrix.insert({
-                    'key':'main',
-                    'matrix': bson.binary.Binary(pickle.dumps(new_matrix, protocol=2))
-                })
+            self.matrix.insert({
+                'key':'main',
+                'matrix': bson.binary.Binary(pickle.dumps(new_matrix, protocol=2))
+            })
 
     # Matrix traversal algorithms
 

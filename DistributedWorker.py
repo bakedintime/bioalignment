@@ -1,4 +1,3 @@
-import pymongo
 from celery import Celery
 from BioMatrix import BioMatrix
 from needleman_wunsch import NWAligner
@@ -12,7 +11,6 @@ def compute_two_sequences(seq1, seq2, filename1, filename2):
     print 'Realizando la alineacion de secuencias correspondientes a los archivos: ['+filename1+', '+filename2+']'
     print 'Resultado: '+str(result)
     biom = BioMatrix()
-    biom.init_db()
     m = biom.get_from_db()
     x = filename1.split('.')[0]
     y = filename2.split('.')[0]
