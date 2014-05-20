@@ -35,10 +35,14 @@ class MainWorker(object):
             """Used to evaluate fitness of DNA. Should return a fitness value, 0-1
             where higher is better."""
             score = 0
-            for index, gene in enumerate(dna.genes):
-                if gene == target[index]:
-                    score += 1
-            fitness = score / float(len(target))
+            genes = dna.genes
+            # matrix coordinates
+            i = genes[0].get_just_filename()
+            j = genes[1].get_just_filename()
+            biom = BioMatrix()
+            score = biom.get_coordinate_score(i, j)
+            percentage = float(score*100)/len(genes[0].get_sequence())
+            fitness = 1 - float(percentage/100)
             return fitness
 
         def mut_func(dna):
