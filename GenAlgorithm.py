@@ -69,8 +69,8 @@ class DNA(object):
         self.genes = []
         for index in xrange(0, self.size):
             if self.dataset:
-                if self.dataset[index] == self.placeholder:
-                    self.genes.insert(index, self.dataset[index])
+                #if self.dataset[index] == self.placeholder:
+                self.genes.insert(index, self.dataset[index])
             else:
                 self.genes.insert(index, self.generation_function(self))
 
