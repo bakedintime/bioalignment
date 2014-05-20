@@ -10,7 +10,6 @@ class MainWorker(object):
         self.fasta_files = glob.glob(('fasta_data/*.fasta'))
         # Inicializar la matriz y subirla a mongodb
         self.biom = BioMatrix()
-        self.biom.init_db()
         self.biom.init_contigs(len(self.fasta_files))
         if overwrite:
             self.biom.init_matrix()
