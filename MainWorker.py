@@ -47,7 +47,31 @@ class MainWorker(object):
 
         def mut_func(dna):
             """Used to mutate a gene. Should return a single gene."""
-            return random.choice(string.letters + ' ,.')
+            index1 = random.randint(0, len(self.genes))
+            gene = self.genes[index1]
+            dna_seg1 = gene[0]
+            dna_seg2 = gene[1]
+            if '-' in dna_seg1.get_sequence():
+                seq = dna_seg1.get_sequence.strip('-')
+                diff = len(dna_seg1.get_sequence()) - len(dna_seg2.get_sequence())
+                bufferPlaces1 = []
+                for i in range(0, diff):
+                    index = random.randint(0, len(seq))
+                    seq = seq[:index] + '-' + seq[index:]
+                    bufferPlaces1.append(index)
+                dna_segment1 = DNASegment(seq, dna_seg1.filename, bufferPlaces1)
+                new_gene = [dna_segment1, dna_seg2] 
+            else:
+                seq = dna_seg2.get_sequence.strip('-')
+                diff = len(dna_seg1.get_sequence()) - len(dna_seg2.get_sequence())
+                bufferPlaces2 = []
+                for i in range(0, diff):
+                    index = random.randint(0, len(seq))
+                    seq = seq[:index] + '-' + seq[index:]
+                    bufferPlaces2.append(index)
+                dna_segment2 = DNASegment(seq, dna_seg2.filename, bufferPlaces2)
+                new_gene = [dna_seg1, dna_segment2] 
+            return new_gene
 
         combined_sequences = []
 
