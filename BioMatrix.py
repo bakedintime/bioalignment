@@ -15,7 +15,7 @@ class BioMatrix(object):
         self.conn = pymongo.Connection("mongodb://bioa:bioa@oceanic.mongohq.com:10091/bioalignment")
         self.db = self.conn.bioalignment
         self.matrix = self.db["matrix"]
-    
+
     def get_score(self):
         return self.score
 
@@ -76,21 +76,21 @@ class BioMatrix(object):
         for i in range(0, self.total_contigs):
             j = self.get_min_alignment(i, np.array([self.contigs.index(x) for x in self.contigs if (x == 1 or x == i)]))
             if self.contigs[j] != 0:
-                print 'este segmento no se ha podido emparejar'
+                print 'El segmento ',i ,' no se ha podido emparejar o ya fue emparejado.'
             else:
                 self.contigs[i] = 1
                 self.contigs[j] = 1
                 self.pairs.append([i,j])
                 self.score += self.biomatrix[i,j]
-                print i, 'se empareja con', j
+                print 'El segmento', i, 'se empareja con el segmento ', j
         return self.contigs
 
 
 """
-Ejemplo random de la agrupacion de contigs 
+Ejemplo random de la agrupacion de contigs
 y su ponderacion a traves de una matriz
 
-if __name__=='__main__': 
+if __name__=='__main__':
     biom = BioMatrix()
     biom.init_contigs(4)
     biom.init_matrix()
