@@ -3,21 +3,49 @@
 
 import random
 import logging
-import sys
+import sys, os
 import pprint
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 logger.setLevel(logging.INFO)
 
-debug = False
+debug = True
+
+
+class DNASegment(object):
+    def __init__(self, contig_sequence, filename, bufferPlaces):
+        self.sequence = contig_sequence
+        self.filename = filename
+        self.fitness = -1
+        self.bufferPlaces = bufferPlaces
+
+    def is_fitness_set(self):
+        if self.fitness == -1:
+            return False
+        else:
+            return True
+
+    def get_just_filename(self):
+        return os.path.basename(self.filename.split('.')[0])
+
+    def get_sequence(self):
+        return self.sequence
+
+    def set_fitness(self, f):
+        self.fitness = f
+
+    def get_fitness(self):
+        return self.fitness
+
+    def __repr__(self):
+        return self.filename
 
 class DNA(object):
     """Python GA DNA sequence, containing genes and all associated
     functions"""
     def __init__(self, generation_function, evaluation_function,
         mutation_function, gene_length = 0, dataset = [], placeholder = None):
-
         self.dataset = dataset
         self.placeholder = placeholder
 
