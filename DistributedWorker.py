@@ -16,16 +16,10 @@ def compute_two_sequences(seq1, seq2, filename1, filename2):
     m = biom.get_from_db()
     x = filename1.split('.')[0]
     y = filename2.split('.')[0]
-    m[int(x)-1, int(y)-1] = result
+    if result < 0 or result == 0:
+        m[int(x)-1, int(y)-1] = 2147483648
+    else:
+        m[int(x)-1, int(y)-1] = result
     biom.post_to_db(m)
     return 'Terminado'
 
-@app.task
-def check_if_finished():
-    conn = pymongo.Connection("mongodb://bioa:bioa@oceanic.mongohq.com:10091/bioalignment")
-    db = conn.bioalignment
-    messages = db["messages"]
-    if len(messages.find()) == 0:
-        return 1
-    else:
-        return 0
