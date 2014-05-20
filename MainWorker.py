@@ -25,11 +25,11 @@ class MainWorker(object):
             seq = self.fastaReader.get_sequence(f1)
             self.sequences.append([seq, f1])
 
-    def build_genetic_alg(self):
-        #def gen_func(dna):
-        #    """Used to initialise DNA. Should return a single gene - in this case,
-        #    a letter"""
-        #    return random.choice(string.letters + ' ,.?')
+    def build_genetic_alg_description(self):
+        def gen_func(dna):
+            """Used to initialise DNA. Should return a single gene - in this case,
+            a letter"""
+            return [0, 1]
 
         def eval_func(dna):
             """Used to evaluate fitness of DNA. Should return a fitness value, 0-1
