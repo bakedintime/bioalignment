@@ -141,18 +141,9 @@ class MainWorker(object):
 
 if __name__=="__main__":
     mw = MainWorker(overwrite=True)
+    # Carga a memoria los contigs
+    # para que puedan ser modificados
+    # por el algoritmo genetico
     mw.load_sequences()
-    #for i in range(0,5):
-    mw.delegate_jobs()
-    # Esperar hasta terminar los calculos
-    while True:
-        if (mw.check_if_finished()):
-            mw.get_results()
-            break
-
-        #(generation, dna) = self.population.run(1.0)
-        #print('Finished!')
-        #print('Generation: ' + str(generation))
-        #print('DNA: ' + ''.join(dna.genes))
-        #mw.get_results()
+    mw.build_genetic_alg_description()
     print 'ya'
