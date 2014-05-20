@@ -45,15 +45,41 @@ class MainWorker(object):
             """Used to mutate a gene. Should return a single gene."""
             return random.choice(string.letters + ' ,.')
 
-        target = "Is Kevin a giant faglord? Yes."
+        combined_sequences = []
 
-        self.population = Population(len(self.sequences))
+        for f1 in self.sequences:
+            for f2 in self.sequences:
+                if f1[1] != f2[1]:
+                    seq1 = f1[0]
+                    seq2 = f2[0]
+                    diff = len(seq1) - len(seq2)
+                    # insertar dashes de manera random
+                    bufferPlaces1=[]
+                    bufferPlaces2=[]
+                    if diff > 0:
+                        for i in range(0, diff):
+                            index = random.randint(0, len(seq2))
+                            seq2 = seq2[:index] + '-' + seq2[index:]
+                            bufferPlaces2.append(index)
+                    elif diff < 0:
+                        for i in range(0, diff):
+                            index = random.randint(0, len(seq1))
+                            seq1 = seq1[:index] + '-' + seq1[index:]
+                            bufferPlaces1.append(index)
+                    filename1 = f1[1]
+                    filename2 = f2[1]
+                    dna_segment1= DNASegment(seq1, filename1, bufferPlaces1)
+                    dna_segment2 = DNASegment(seq2, filename2, bufferPlaces2)
+                    combined_sequences.append([dna_segment1, dna_segment2])
+
+
+        self.population = Population(len(combined_sequences))
         self.population.setup(
-            #gen_func,
+            gen_func,
             eval_func,
             mut_func,
-            gene_length = len(target),
-            dataset = self.sequences
+            # i**2 -i 
+            dataset = combined_sequences
         )
 
 
