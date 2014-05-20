@@ -19,6 +19,7 @@ class MainWorker(object):
             self.biom.get_from_db()
         self.fastaReader = FastaReader()
         self.sequences = []
+        self.population = None
 
     def load_sequences(self):
         for f1 in self.fasta_files:
@@ -146,4 +147,18 @@ if __name__=="__main__":
     # por el algoritmo genetico
     mw.load_sequences()
     mw.build_genetic_alg_description()
+    
+    def recompute_fitness(mw):
+        mw.delegate_jobs()
+        # Esperar hasta terminar los calculos
+        while True:
+            if (mw.check_if_finished()):
+                mw.get_results()
+                break
+        
+    (generation, dna) = mw.population.run(recompute_fitness, mw, target_fitness=1.0)
+    print('Finished!')
+    print('Generation: ' + str(generation))
+    #print('DNA: ' + str(dna.genes[0].bufferPlaces) + ', '+ str(dna.genes[1].bufferPlaces))
+    print dna.genes
     print 'ya'
