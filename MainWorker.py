@@ -1,6 +1,6 @@
-import glob, os
+import glob, os, random
 import pymongo
-from GenAlgorithm import DNA, Population
+from GenAlgorithm import DNASegment, Population
 from BioMatrix import BioMatrix
 from DistributedWorker import compute_two_sequences
 from needleman_wunsch import FastaReader
