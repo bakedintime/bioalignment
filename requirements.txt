@@ -1,2 +1,6 @@
-numpy
+# easy_install numpy
+#numpy
 nwalign
+pymongo
+celery
+#-U celery[mongodb]

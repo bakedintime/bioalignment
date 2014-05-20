@@ -7,4 +7,10 @@ export FFLAGS=-ff2c
 
 pip install numpy
 
+Para correr los workers:
+celery -A DistributedWorker worker --loglevel=info
+Correr el central:
+python MainWorker.py
+
+
 cadena mas larga le sacas el 25% entonces se le agregan a la cadena mas peque;a
