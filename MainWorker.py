@@ -73,11 +73,6 @@ class MainWorker(object):
                 if f1[1] != f2[1]:
                     seq1 = f1[0]
                     seq2 = f2[0]
-                    diff = len(seq1) - len(seq2)
-                    if diff > 0:
-                        seq2 = seq2.ljust(diff+len(seq2), '-')
-                    elif diff < 0:
-                        seq1 = seq1.rjust(abs(diff)+len(seq1), '-')
                     filename1 = f1[1]
                     filename2 = f2[1]
                     result = compute_two_sequences.delay(seq1, seq2, os.path.basename(filename1), os.path.basename(filename2))
