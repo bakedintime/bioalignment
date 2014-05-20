@@ -207,11 +207,12 @@ class Population(object):
 
         return best_performer, total_fitness / self.size
 
-    def run(self, target_fitness = 1.0):
+    def run(self, recompute_fitness_function, main_worker_instance, target_fitness = 1.0):
         """Runs the genetic algorithm until target_fitness is reached."""
 
         generation = 1
         while 1:
+            recompute_fitness_function(main_worker_instance)
             dna = self.evaluate(target_fitness)
             if dna:
                 return (generation, dna)
